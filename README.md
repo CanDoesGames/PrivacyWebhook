@@ -3,5 +3,9 @@
 **Well, thats why PrivacyWebhook exists!**
 
 
+# Usage ⬇️
+**https://candoesgames.github.io/PrivacyWebhook/**
+
 # Copyright:
 **This project uses the Apache License 2.0**
+
