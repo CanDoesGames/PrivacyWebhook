@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrivacyWebhook</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            color: #ecf0f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: rgba(44, 62, 80, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, textarea, button {
+            width: calc(100% - 20px);
+            margin-top: 5px;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input, textarea {
+            background: #2c3e50;
+            color: #ecf0f1;
+            border: 1px solid #7f8c8d;
+        }
+        button {
+            background: #3498db;
+            color: #ecf0f1;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Privacy Webhook Sender</h1>
+        <form id="webhookForm">
+            <div class="form-group">
+                <label for="webhookUrl">Webhook URL:</label>
+                <input type="url" id="webhookUrl" name="webhookUrl" required>
+            </div>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+            </div>
+            <button type="submit">Send Embed</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("webhookForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            
+            // Get the form inputs
+            var webhookUrl = document.getElementById("webhookUrl").value;
+            var title = document.getElementById("title").value;
+            var description = document.getElementById("description").value;
+            
+            // Construct the embed object
+            var embed = {
+                title: title,
+                description: description,
+                color: 16711680 // Red color, you can customize this
+            };
+
+            // Construct the payload with the embed
+            var payload = {
+                embeds: [embed]
+            };
+            
+            // Convert payload to JSON
+            var jsonPayload = JSON.stringify(payload);
+            
+            // Make a POST request to the webhook URL
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: jsonPayload
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send embed.');
+                }
+                alert("Embed sent successfully!");
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Failed to send embed.");
+            });
+        });
+    </script>
+</body>
+</html>
