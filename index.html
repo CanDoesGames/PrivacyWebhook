@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrivacyCord</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            color: #ecf0f1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: rgba(44, 62, 80, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        label {
+            font-weight: 600;
+            color: #ecf0f1;
+            display: block;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        input, textarea, input[type="color"] {
+            width: calc(100% - 20px);
+            margin-top: 8px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            border: 1px solid #7f8c8d;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="color"] {
+            height: 35px;
+            padding: 0;
+        }
+
+        input:focus, textarea:focus, input[type="color"]:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.6);
+            outline: none;
+        }
+
+        button {
+    	width: calc(100% - 20px);
+    	padding: 12px;
+    	border: none;
+    	border-radius: 8px;
+    	background: linear-gradient(45deg, #ff0000, #ffff00);
+    	color: #fff;
+    	cursor: pointer;
+    	font-size: 16px;
+    	font-weight: 600;
+    	transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+	}
+
+	button:hover {
+    		background: linear-gradient(45deg, #ff6347, #ffff99);
+    		transform: scale(1.05);
+    		box-shadow: 0 4px 10px rgba(255, 99, 71, 0.5);
+	}
+
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .toggle-group {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 30px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            border-radius: 50%;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: #3498db;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+
+        .slider-label {
+            margin-left: 12px;
+            color: #ecf0f1;
+            font-weight: 600;
+        }
+
+        .preview {
+            background: rgba(52, 73, 94, 0.9);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 15px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            position: relative;
+            flex-direction: column;
+            display: none;
+        }
+
+        .preview .sidebar {
+            width: 8px;
+            background-color: #ff0000;
+            border-radius: 4px 0 0 4px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .preview .content {
+            padding-left: 10px;
+            margin-left: 8px;
+            flex: 1;
+        }
+
+        .preview h2 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .preview p {
+            margin: 5px 0 0 0;
+            font-size: 12px;
+        }
+
+        .version-container {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(44, 62, 80, 0.9);
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #7f8c8d;
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .version-container a {
+            text-decoration: none;
+            color: #ecf0f1;
+            background: #3498db;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin: 0 8px;
+            font-size: 18px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .version-container a:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PrivacyCord v4</h1>
+        <form id="webhookForm">
+            <div class="form-group">
+                <label for="webhookUrl">Webhook URL:</label>
+                <input type="url" id="webhookUrl" name="webhookUrl" required>
+            </div>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="color">Sidebar Color:</label>
+                <input type="color" id="color" name="color" value="#ff0000">
+            </div>
+            <button type="submit">Send Embed</button>
+            <div class="toggle-group">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="togglePreview">
+                    <span class="slider"></span>
+                </label>
+                <label for="togglePreview" class="slider-label">Toggle Preview</label>
+            </div>
+        </form>
+        <div class="preview">
+            <div class="sidebar" id="sidebarColor"></div>
+            <div class="content">
+                <h2 id="previewTitle">Title</h2>
+                <p id="previewDescription">Description</p>
+            </div>
+        </div>
+        <p id="message" style="margin-top: 15px;"></p>
+    </div>
+    <div class="version-container">
+        <a href="index-v1.html">Version 1</a>
+        <a href="index-v2.html">Version 2</a>
+	<a href="index-v3.html">Version 3</a>
+        <a href="index.html">Newest</a>
+    </div>
+
+    <script>
+        document.getElementById('webhookForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const webhookUrl = document.getElementById('webhookUrl').value;
+            const title = document.getElementById('title').value;
+            const description = document.getElementById('description').value;
+            const color = document.getElementById('color').value;
+
+            const embed = {
+                embeds: [
+                    {
+                        title: title,
+                        description: description,
+                        color: parseInt(color.slice(1), 16),
+                    }
+                ]
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(embed)
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('message').innerText = 'Message sent successfully!';
+                    document.getElementById('message').style.color = 'green';
+                } else {
+                    document.getElementById('message').innerText = 'Failed to send message.';
+                    document.getElementById('message').style.color = 'red';
+                }
+            })
+            .catch(error => {
+                document.getElementById('message').innerText = 'An error occurred.';
+                document.getElementById('message').style.color = 'red';
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('togglePreview').addEventListener('change', function() {
+            document.querySelector('.preview').style.display = this.checked ? 'block' : 'none';
+        });
+
+        document.getElementById('webhookForm').addEventListener('input', function() {
+            document.getElementById('previewTitle').textContent = document.getElementById('title').value;
+            document.getElementById('previewDescription').textContent = document.getElementById('description').value;
+            document.getElementById('sidebarColor').style.backgroundColor = document.getElementById('color').value;
+        });
+    </script>
+</body>
+</html>
