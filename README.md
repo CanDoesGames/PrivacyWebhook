@@ -8,7 +8,9 @@
 
 # Versions 🖥️:
 V1 (Aka: the effortless version): https://candoesgames.github.io/PrivacyWebhook/index-v1.html
+
 V2 (when I started to put some effort in): https://candoesgames.github.io/PrivacyWebhook/index-v2.html
+
 V3 (still most code is gpt but I hope this is the last version that uses chatgpt code): https://candoesgames.github.io/PrivacyWebhook/index.html
 
 # OTHER ❓:
