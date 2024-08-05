@@ -187,37 +187,36 @@
 
     <script>
         document.getElementById("webhookForm").addEventListener("input", function(event) {
-            // Update preview
+         
             document.getElementById("previewTitle").textContent = document.getElementById("title").value;
             document.getElementById("previewDescription").textContent = document.getElementById("description").value;
             document.getElementById("sidebarColor").style.backgroundColor = document.getElementById("color").value;
         });
 
         document.getElementById("webhookForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent the form from submitting normally
+            event.preventDefault();
 
-            // Get the form inputs
+       
             var webhookUrl = document.getElementById("webhookUrl").value;
             var title = document.getElementById("title").value;
             var description = document.getElementById("description").value;
-            var color = parseInt(document.getElementById("color").value.substring(1), 16); // Convert hex to decimal
+            var color = parseInt(document.getElementById("color").value.substring(1), 16);
 
-            // Construct the embed object
+          
             var embed = {
                 title: title,
                 description: description,
                 color: color
             };
 
-            // Construct the payload with the embed
             var payload = {
                 embeds: [embed]
             };
 
-            // Convert payload to JSON
+           
             var jsonPayload = JSON.stringify(payload);
 
-            // Make a POST request to the webhook URL
+         
             fetch(webhookUrl, {
                 method: "POST",
                 headers: {
