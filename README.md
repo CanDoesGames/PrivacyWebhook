@@ -4,7 +4,7 @@
 
 
 # Usage ⬇️
-**https://candoesgames.github.io/PrivacyWebhook/**
+**https://candoesgames.github.io/PrivacyCord/**
 
 # Versions 🖥️:
 
