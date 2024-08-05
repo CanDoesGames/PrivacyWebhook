@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrivacyHook v3</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3);
+            color: #ecf0f1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: rgba(44, 62, 80, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            margin-bottom: 60px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        label {
+            font-weight: 600;
+            color: #ecf0f1;
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
+        }
+
+        input, textarea, input[type="color"] {
+            width: calc(100% - 20px);
+            margin-top: 5px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background: #34495e;
+            color: #ecf0f1;
+            border: 1px solid #7f8c8d;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="color"] {
+            height: 45px;
+            padding: 0;
+        }
+
+        input:focus, textarea:focus, input[type="color"]:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.6);
+            outline: none;
+        }
+
+        button {
+            width: calc(100% - 20px);
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ff7f50, #ff6347, #ff4500);
+            color: #ecf0f1;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #ff6347, #ff4500, #ff0000);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 99, 71, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .preview {
+            background: rgba(52, 73, 94, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .preview .sidebar {
+            width: 10px;
+            background-color: #ff0000;
+            border-radius: 5px 0 0 5px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .preview .content {
+            padding-left: 20px;
+            margin-left: 10px;
+            flex: 1;
+        }
+
+        .preview h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .preview p {
+            margin: 10px 0 0 0;
+            font-size: 16px;
+        }
+
+        .version-container {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: rgba(44, 62, 80, 0.9);
+            padding: 10px;
+            text-align: center;
+            border-top: 1px solid #7f8c8d;
+            box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .version-container a {
+            text-decoration: none;
+            color: #ecf0f1;
+            background: #3498db;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin: 0 5px;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .version-container a:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PrivacyHook v3</h1>
+        <form id="webhookForm">
+            <div class="form-group">
+                <label for="webhookUrl">Webhook URL:</label>
+                <input type="url" id="webhookUrl" name="webhookUrl" required>
+            </div>
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="color">Sidebar Color:</label>
+                <input type="color" id="color" name="color" value="#ff0000">
+            </div>
+            <button type="submit">Send Embed</button>
+        </form>
+        <div class="preview">
+            <div class="sidebar" id="sidebarColor"></div>
+            <div class="content">
+                <h2 id="previewTitle">Title</h2>
+                <p id="previewDescription">Description</p>
+            </div>
+        </div>
+    </div>
+    <div class="version-container">
+        <a href="index-v1.html">Version 1</a>
+        <a href="index-v2.html">Version 2</a>
+        <a href="index.html">Newest</a>
+    </div>
+
+    <script>
+        document.getElementById("webhookForm").addEventListener("input", function(event) {
+            document.getElementById("previewTitle").textContent = document.getElementById("title").value;
+            document.getElementById("previewDescription").textContent = document.getElementById("description").value;
+            document.getElementById("sidebarColor").style.backgroundColor = document.getElementById("color").value;
+        });
+
+        document.getElementById("webhookForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var webhookUrl = document.getElementById("webhookUrl").value;
+            var title = document.getElementById("title").value;
+            var description = document.getElementById("description").value;
+            var color = parseInt(document.getElementById("color").value.substring(1), 16);
+
+            var embed = {
+                title: title,
+                description: description,
+                color: color
+            };
+
+            var payload = {
+                embeds: [embed]
+            };
+
+            var jsonPayload = JSON.stringify(payload);
+
+            fetch(webhookUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: jsonPayload
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to send webhook message.');
+                }
+                alert("Sent to discord!");
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Failed to send embed.");
+            });
+        });
+    </script>
+</body>
+</html>
